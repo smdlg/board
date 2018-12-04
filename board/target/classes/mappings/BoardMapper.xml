@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardSQL">
+	
+	<select id="select" parameterType="boardVO" resultType="boardVO">
+		select * 
+		from Board
+		<!-- where 1=1 --> 
+<!-- 		<if test = "num != 0">
+			AND num = #{num}			
+		</if>
+		<if test = "kor_name != null">
+			AND kor_name = #{kor_name}
+		</if>
+		<if test = "eng_name != null">
+			AND eng_name = #{eng_name}
+		</if>
+		<if test = "db_var != null">
+			AND db_var = #{db_var}
+		</if>
+		<if test = "cd_var != null">
+			AND cd_var = #{cd_var}
+		</if>
+		<if test = "key != null">
+			AND CONCAT(kor_name, eng_name, db_var, cd_var) LIKE CONCAT('%',#{key},'%')
+		</if> -->
+		ORDER BY num DESC
+	</select>
+	
+	<insert id="insert" parameterType="boardVO">
+		insert 
+		into Board (
+							title,
+							content, 
+							users)
+		values(
+							#{title},
+							#{content},
+							#{users}
+		)
+	</insert>
+
+	<update id="updateBoard" parameterType="boardVO">
+		update DATADICT 
+		set	title=#{title},
+			content=#{content},
+			users=#{users}
+		where num=#{num}
+	</update>
+	
+	<delete id="deleteBoard" parameterType="boardVO">
+		delete 
+		from Board 
+		where num = #{num}
+	</delete>
+	
+	<resultMap type="boardVO" id="rsMap">
+		<result property="num" column="num" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="users" column="users" />
+	</resultMap>
+	  
+  
+</mapper>
